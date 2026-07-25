@@ -28,11 +28,12 @@ React frontend (Vite, :5173)
         |  POST /chat (SSE stream)
         v
 FastAPI backend (:8000)
-  - guardrails/input.py   -> validates message + model before anything runs
-  - sessions/manager.py   -> in-memory per-session chat history
-  - clients/openrouter.py -> streams the completion, retries once on 5xx
-  - guardrails/output.py  -> rejects empty/malformed model output
-  - exceptions.py         -> maps every failure to a JSON error + status code
+  - guardrails/input.py           -> validates message + model before anything runs
+  - sessions/manager.py           -> in-memory per-session chat history
+  - guardrails/system_prompt.py   -> injects safety system message
+  - clients/openrouter.py         -> streams the completion, retries once on 5xx
+  - guardrails/output.py          -> rejects empty/malformed model output
+  - exceptions.py                 -> maps every failure to a JSON error + status code
         |  HTTPS request
         v
 OpenRouter API

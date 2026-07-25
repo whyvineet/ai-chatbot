@@ -55,6 +55,7 @@ backend/
 │   └── settings.py       # env-driven settings
 ├── exceptions.py          # ChatbotError hierarchy + FastAPI exception handlers
 ├── guardrails/
+│   ├── system_prompt.py   # injects safety system message
 │   ├── input.py           # message/model validation before a request runs
 │   └── output.py          # rejects empty or malformed model responses
 ├── schemas/               # pydantic request/response models

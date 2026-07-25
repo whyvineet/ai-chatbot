@@ -8,6 +8,7 @@ from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from guardrails.input import validate_chat_request
 from guardrails.output import validate_response
+from guardrails.system_prompt import SYSTEM_PROMPT
 from schemas.chat import ChatRequest, NewSessionResponse
 from schemas.response import HealthResponse, ModelInfo, ModelsResponse
 from sessions.manager import session_manager
@@ -62,7 +63,10 @@ async def chat(request: ChatRequest) -> StreamingResponse:
 
 def _build_provider_messages(session_id: str) -> list[dict[str, str]]:
     history = session_manager.get_history(session_id)
-    return [{"role": m.role, "content": m.content} for m in history]
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        *({"role": m.role, "content": m.content} for m in history),
+    ]
 
 
 async def _stream_and_persist(
